@@ -1,0 +1,40 @@
+<div class="register-container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Register</mat-card-title>
+    </mat-card-header>
+    <form [formGroup]="registerFormGroup">
+      <mat-card-content>
+        <mat-form-field>
+          <input formControlName="email" matInput placeholder="E-mail" />
+          <mat-error *ngIf="email?.hasError('email')"
+            >Email must be a valid email address</mat-error
+          >
+          <mat-error *ngIf="email?.hasError('required')"
+            >Email is required</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="password" matInput placeholder="Password" />
+          <mat-error *ngIf="password?.hasError('hasSmallCase')"
+            >Password should contain a lowercase letter</mat-error
+          >
+          <mat-error *ngIf="password?.hasError('hasCapitalCase')"
+            >Uppercase should contain a lowercase letter</mat-error
+          >
+          <mat-error *ngIf="password?.hasError('hasSpecialCharacters')"
+            >Password should contain a special charachter</mat-error
+          >
+        </mat-form-field>
+      </mat-card-content>
+      <button
+        mat-raised-button
+        color="accent"
+        class="btn-block"
+        [disabled]="!registerFormGroup.valid"
+      >
+        Log in
+      </button>
+    </form>
+  </mat-card>
+</div>

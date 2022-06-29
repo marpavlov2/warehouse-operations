@@ -1,0 +1,32 @@
+<mat-toolbar
+  color="primary"
+  class="app-header"
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+>
+  <a
+    href="https://www.positronx.io"
+    target="_blank"
+    class="warehouse-operations-logo"
+  >
+    Warehouse
+  </a>
+  <div class="nav-tool-items">
+    <div fxHide.gt-xs>
+      <button mat-button (click)="sidenav.toggleSidenav()">
+        <span style="margin-right: 5px">Menu</span>
+        <mat-icon mat-list-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div fxShow="true" fxHide.lt-sm="true">
+      <a mat-button routerLink="login" routerLinkActive="active">Log in</a>
+      <a
+        mat-button
+        mat-raised-button
+        routerLink="register"
+        routerLinkActive="active"
+        >Register</a
+      >
+    </div>
+  </div>
+</mat-toolbar>

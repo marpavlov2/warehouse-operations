@@ -1,0 +1,20 @@
+mat-drawer-container,
+mat-sidenav-content,
+mat-sidenav {
+  height: 100%;
+  position: relative;
+}
+
+mat-drawer {
+  width: 220px;
+}
+
+mat-nav-list {
+  mat-list-item {
+    font-size: 14px;
+    line-height: 18px;
+    span {
+      margin-left: 10px;
+    }
+  }
+}
