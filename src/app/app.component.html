@@ -9,10 +9,16 @@
         <span>Register</span>
         <mat-icon mat-list-icon>exit_to_app</mat-icon>
       </mat-list-item>
+      <mat-list-item (click)="logout()">
+        <span>Logout</span>
+        <mat-icon mat-list-icon>logout</mat-icon>
+      </mat-list-item>
     </mat-nav-list>
   </mat-drawer>
   <mat-drawer-content>
     <app-header></app-header>
-    <router-outlet></router-outlet>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>

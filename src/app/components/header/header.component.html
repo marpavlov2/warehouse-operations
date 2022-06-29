@@ -18,7 +18,7 @@
         <mat-icon mat-list-icon>menu</mat-icon>
       </button>
     </div>
-    <div fxShow="true" fxHide.lt-sm="true">
+    <div fxShow="true" fxHide.lt-sm="true" *ngIf="!auth.isLoggedIn">
       <a mat-button routerLink="login" routerLinkActive="active">Log in</a>
       <a
         mat-button
@@ -27,6 +27,14 @@
         routerLinkActive="active"
         >Register</a
       >
+    </div>
+    <div
+      fxShow="true"
+      fxHide.lt-sm="true"
+      *ngIf="auth.isLoggedIn"
+      (click)="logout()"
+    >
+      <a mat-button mat-raised-button>Logout</a>
     </div>
   </div>
 </mat-toolbar>

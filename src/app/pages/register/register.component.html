@@ -30,10 +30,11 @@
       <button
         mat-raised-button
         color="accent"
-        class="btn-block"
+        class="full-width"
         [disabled]="!registerFormGroup.valid"
+        (click)="register()"
       >
-        Log in
+        Register
       </button>
     </form>
   </mat-card>

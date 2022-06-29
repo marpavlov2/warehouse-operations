@@ -30,8 +30,9 @@
       <button
         mat-raised-button
         color="accent"
-        class="btn-block"
+        class="full-width"
         [disabled]="!loginFormGroup.valid"
+        (click)="login()"
       >
         Log in
       </button>

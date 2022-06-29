@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SidenavService } from 'src/app/shared/sidenav.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { SidenavService } from 'src/app/shared/services/sidenav.service';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +8,11 @@ import { SidenavService } from 'src/app/shared/sidenav.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  constructor(public sidenav: SidenavService) {}
+  constructor(public sidenav: SidenavService, public auth: AuthService) {}
 
   ngOnInit(): void {}
+
+  logout() {
+    this.auth.logout();
+  }
 }

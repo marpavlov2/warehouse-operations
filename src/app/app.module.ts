@@ -10,7 +10,18 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { LogInComponent } from './pages/log-in/log-in.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { SidenavService } from './shared/sidenav.service';
+import { SidenavService } from './shared/services/sidenav.service';
+
+import { environment } from 'src/environments/environment';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { AuthService } from './shared/services/auth.service';
+import { AuthGuardService } from './shared/services/auth.guard';
+import { OrdersComponent } from './pages/orders/orders.component';
+import { OrderService } from './shared/services/order.service';
+import { OrdersListResolver } from './pages/orders/orders.resolver';
 
 @NgModule({
   declarations: [
@@ -18,6 +29,7 @@ import { SidenavService } from './shared/sidenav.service';
     LogInComponent,
     RegisterComponent,
     HeaderComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,8 +39,18 @@ import { SidenavService } from './shared/sidenav.service';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
-  providers: [SidenavService],
+  providers: [
+    SidenavService,
+    AuthService,
+    AuthGuardService,
+    OrderService,
+    OrdersListResolver,
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

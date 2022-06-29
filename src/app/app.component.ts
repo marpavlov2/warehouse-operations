@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { SidenavService } from './shared/sidenav.service';
+import { AuthService } from './shared/services/auth.service';
+import { SidenavService } from './shared/services/sidenav.service';
 
 @Component({
   selector: 'app-root',
@@ -10,9 +11,16 @@ import { SidenavService } from './shared/sidenav.service';
 export class AppComponent {
   @ViewChild('drawer') public sidenav: MatSidenav;
 
-  constructor(public sidenavService: SidenavService) {}
+  constructor(
+    public sidenavService: SidenavService,
+    private _auth: AuthService
+  ) {}
 
   ngAfterViewInit(): void {
     this.sidenavService.setSidenav(this.sidenav);
+  }
+
+  logout() {
+    this._auth.logout();
   }
 }

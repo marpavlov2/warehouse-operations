@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomFormValidator } from 'src/app/shared/form-validator';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,10 @@ export class RegisterComponent implements OnInit {
     return this.registerFormGroup.get('password');
   }
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this._registerFormGroup = this._formBuilder.group({
@@ -45,5 +49,10 @@ export class RegisterComponent implements OnInit {
         ]),
       ],
     });
+  }
+
+  async register() {
+    const registerForm = this.registerFormGroup.value;
+    await this._authService.signUp(registerForm.email, registerForm.password);
   }
 }

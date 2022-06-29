@@ -9,6 +9,13 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-.btn-block {
+.full-width {
   width: 100%;
+}
+
+.text-truncate {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

@@ -1,0 +1,16 @@
+.orders-list-container {
+  .search-container {
+    margin-right: 24px;
+  }
+
+  .mat-table {
+    a {
+      color: #525050;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .mat-column-buttons {
+      flex: 0 1 80px;
+    }
+  }
+}
