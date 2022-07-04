@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
-import { Order } from 'src/app/shared/interfaces/order.model';
+import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { Order } from 'src/app/orders/interfaces/order.model';
 import { OrderService } from 'src/app/orders/services/order.service';
 
 @Injectable()
-export class OrderResolver implements Resolve<Order> {
-  constructor(private _orderService: OrderService) {}
+export class OrderResolver implements Resolve<Order | null> {
+  constructor(private _router: Router, private _orderService: OrderService) {}
 
-  async resolve(route: ActivatedRouteSnapshot): Promise<Order> {
+  async resolve(route: ActivatedRouteSnapshot): Promise<Order | null> {
     const orderId = route.params['id'];
+    const order = await this._orderService.getOrder(orderId);
 
-    return await this._orderService.getOrder(orderId);
+    if (!order) {
+      this._router.navigate(['orders']);
+      return null;
+    }
+
+    return order;
   }
 }

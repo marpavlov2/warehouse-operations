@@ -1,19 +1,15 @@
-// src/app/services/auth.service.ts
+// src/app/services/product.service.ts
 
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { collection, Firestore, getDocs } from '@angular/fire/firestore';
 import { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
-import { BehaviorSubject } from 'rxjs';
-import { Product } from 'src/app/shared/interfaces/product.model';
-import { ProductQuery } from 'src/app/shared/interfaces/product.query';
+import { ToastrService } from 'ngx-toastr';
+import { Product } from 'src/app/orders/interfaces/product.model';
+import { ProductQuery } from 'src/app/orders/interfaces/product.query';
 
 @Injectable()
 export class ProductService {
-  private _productsSubject$ = new BehaviorSubject<Product[]>([]);
-  public productsSubject$ = this._productsSubject$.asObservable();
-
-  constructor(private _firestore: Firestore, private router: Router) {}
+  constructor(private _firestore: Firestore, private _toastr: ToastrService) {}
 
   async getProducts(): Promise<Product[] | void> {
     try {
@@ -24,8 +20,9 @@ export class ProductService {
         (doc: QueryDocumentSnapshot<DocumentData>) => doc.data() as ProductQuery
       );
 
-      this._productsSubject$.next(products);
       return products;
-    } catch (error) {}
+    } catch (error) {
+      this._toastr.error('Failed to fetch products.');
+    }
   }
 }

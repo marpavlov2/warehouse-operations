@@ -5,10 +5,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { Order } from 'src/app/shared/interfaces/order.model';
+import { Order } from 'src/app/orders/interfaces/order.model';
 import { OrderService } from 'src/app/orders/services/order.service';
 import { DeleteOrderDialogComponent } from '../../dialogs/delete-order-dialog/delete-order-dialog.component';
-import { OrderStatus } from 'src/app/shared/enums/order-status.enum';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -19,8 +18,6 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class OrdersListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
-  orderStatuses = OrderStatus;
 
   deleteOrderDialogRef: MatDialogRef<DeleteOrderDialogComponent> | null;
 

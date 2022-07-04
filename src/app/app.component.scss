@@ -20,5 +20,25 @@ mat-nav-list {
 }
 
 .container {
-  padding: 15px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .container {
+    width: 640px;
+    margin-top: 40px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    width: 1024px;
+  }
 }

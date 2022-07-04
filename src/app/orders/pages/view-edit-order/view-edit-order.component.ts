@@ -6,8 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Order } from 'src/app/shared/interfaces/order.model';
-import { Product } from 'src/app/shared/interfaces/product.model';
+import { Order } from 'src/app/orders/interfaces/order.model';
+import { Product } from 'src/app/orders/interfaces/product.model';
 import { OrderService } from 'src/app/orders/services/order.service';
 import { Location } from '@angular/common';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -72,19 +72,13 @@ export class ViewEditOrderComponent implements OnInit {
       this.order.orderId,
       order
     );
+
     if (orderCreated) {
       this._router.navigate(['/orders']);
     }
   }
 
-  async deleteOrder(orderId: string) {
-    const orderRemoved = await this._orderService.deleteOrder(orderId);
-    if (orderRemoved) {
-      this._router.navigate(['/orders']);
-    }
-  }
-
-  openDeleteOrderDialog() {
+  openDeleteOrderDialog(): void {
     this.deleteOrderDialogRef = this._matDialog.open(
       DeleteOrderDialogComponent,
       {
@@ -101,6 +95,13 @@ export class ViewEditOrderComponent implements OnInit {
 
       this.deleteOrderDialogRef = null;
     });
+  }
+
+  async deleteOrder(orderId: string): Promise<void> {
+    const orderRemoved = await this._orderService.deleteOrder(orderId);
+    if (orderRemoved) {
+      this._router.navigate(['/orders']);
+    }
   }
 
   goBack() {

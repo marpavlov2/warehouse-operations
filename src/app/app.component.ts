@@ -13,7 +13,7 @@ export class AppComponent {
 
   constructor(
     public sidenavService: SidenavService,
-    private _auth: AuthService
+    public auth: AuthService
   ) {}
 
   ngAfterViewInit(): void {
@@ -21,6 +21,6 @@ export class AppComponent {
   }
 
   logout() {
-    this._auth.logout();
+    this.auth.logout();
   }
 }

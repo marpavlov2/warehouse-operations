@@ -32,6 +32,7 @@ const routes: Routes = [
       orderData: OrderResolver,
     },
   },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({

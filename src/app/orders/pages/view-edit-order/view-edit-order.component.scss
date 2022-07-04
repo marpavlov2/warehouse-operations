@@ -1,4 +1,9 @@
-.add-order-container {
+.view-edit-order-container {
+  .view-edit-order {
+    width: 100%;
+    max-width: 780px;
+  }
+
   mat-card-header {
     text-align: center;
     width: 100%;

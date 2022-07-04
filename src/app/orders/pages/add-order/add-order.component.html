@@ -3,59 +3,61 @@
   fxLayout="column"
   fxLayoutAlign="center center"
 >
-  <mat-card>
-    <div
-      fxLayout="row"
-      fxLayoutAlign="flext-start center"
-      class="pointer full-width navigate-back-container"
-      (click)="goBack()"
-    >
-      <mat-icon>keyboard_arrow_left</mat-icon>
-      <span>Go back</span>
-    </div>
-    <mat-card-header>
-      <mat-card-title>Add Order</mat-card-title>
-    </mat-card-header>
-    <form [formGroup]="orderFormGroup">
-      <mat-card-content>
-        <mat-form-field>
-          <input formControlName="name" matInput placeholder="Order Name" />
-        </mat-form-field>
-        <mat-form-field>
-          <input formControlName="client" matInput placeholder="Client" />
-        </mat-form-field>
-        <mat-form-field class="price-form-control" floatLabel="never">
-          <input
-            type="number"
-            formControlName="price"
-            matInput
-            placeholder="0"
-          />
-          <span matPrefix>$&nbsp;</span>
-          <span matSuffix>.00</span>
-        </mat-form-field>
-        <mat-selection-list
-          class="products-container"
-          formControlName="products"
-        >
-          <h3 matSubheader>Items</h3>
-          <mat-list-option
-            [value]="product.id"
-            *ngFor="let product of productsList"
-          >
-            {{ product.name }}
-          </mat-list-option>
-        </mat-selection-list>
-      </mat-card-content>
-      <button
-        mat-raised-button
-        color="accent"
-        class="full-width"
-        [disabled]="!orderFormGroup.valid"
-        (click)="onCreateNewOrder()"
+  <div class="add-order">
+    <mat-card>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="flext-start center"
+        class="pointer full-width navigate-back-container"
+        (click)="goBack()"
       >
-        Add
-      </button>
-    </form>
-  </mat-card>
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        <span>Go back</span>
+      </div>
+      <mat-card-header>
+        <mat-card-title>Add Order</mat-card-title>
+      </mat-card-header>
+      <form [formGroup]="orderFormGroup">
+        <mat-card-content>
+          <mat-form-field>
+            <input formControlName="name" matInput placeholder="Order Name" />
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="client" matInput placeholder="Client" />
+          </mat-form-field>
+          <mat-form-field class="price-form-control" floatLabel="never">
+            <input
+              type="number"
+              formControlName="price"
+              matInput
+              placeholder="0"
+            />
+            <span matPrefix>$&nbsp;</span>
+            <span matSuffix>.00</span>
+          </mat-form-field>
+          <mat-selection-list
+            class="products-container"
+            formControlName="products"
+          >
+            <h3 matSubheader>Items</h3>
+            <mat-list-option
+              [value]="product.id"
+              *ngFor="let product of productsList"
+            >
+              {{ product.name }}
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-card-content>
+        <button
+          mat-raised-button
+          color="accent"
+          class="full-width"
+          [disabled]="!orderFormGroup.valid"
+          (click)="onCreateNewOrder()"
+        >
+          Add
+        </button>
+      </form>
+    </mat-card>
+  </div>
 </div>

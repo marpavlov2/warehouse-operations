@@ -1,76 +1,84 @@
-<div class="add-order-container" fxLayout="row" fxLayoutAlign="center center">
-  <mat-card>
-    <div
-      fxLayout="row"
-      fxLayoutAlign="flext-start center"
-      class="pointer full-width navigate-back-container"
-      (click)="goBack()"
-    >
-      <mat-icon>keyboard_arrow_left</mat-icon>
-      <span>Go back</span>
-    </div>
-    <mat-card-header>
-      <mat-card-title>Order #{{ order.orderId }}</mat-card-title>
-    </mat-card-header>
-    <form [formGroup]="orderFormGroup">
-      <mat-card-content>
-        <mat-form-field>
-          <input formControlName="name" matInput placeholder="Order Name" />
-        </mat-form-field>
-        <mat-form-field>
-          <input formControlName="client" matInput placeholder="Client" />
-        </mat-form-field>
-        <mat-form-field class="price-form-control" floatLabel="never">
-          <input
-            type="number"
-            formControlName="price"
-            matInput
-            placeholder="0"
-          />
-          <span matPrefix>$&nbsp;</span>
-          <span matSuffix>.00</span>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Status</mat-label>
-          <mat-select formControlName="status">
-            <mat-option value="opened">Opened</mat-option>
-            <mat-option value="closed">Closed</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-selection-list
-          class="products-container"
-          formControlName="products"
-        >
-          <h3 matSubheader>Items</h3>
-          <mat-list-option
-            *ngFor="let product of productsList"
-            [selected]="product.isSelected"
-            [value]="product.id"
-          >
-            {{ product.name }}
-          </mat-list-option>
-        </mat-selection-list>
-      </mat-card-content>
-      <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="14px">
-        <button
-          mat-raised-button
-          color="primary"
-          class="full-width"
-          [disabled]="!orderFormGroup.valid"
-          (click)="onSubmit()"
-        >
-          Save
-        </button>
-        <button
-          mat-raised-button
-          color="accent"
-          class="full-width"
-          [disabled]="orderFormGroup.disabled"
-          (click)="openDeleteOrderDialog()"
-        >
-          Delete
-        </button>
+<div
+  class="view-edit-order-container"
+  fxLayout="row"
+  fxLayoutAlign="center center"
+>
+  <div class="view-edit-order">
+    <mat-card>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="flext-start center"
+        class="pointer full-width navigate-back-container"
+        (click)="goBack()"
+      >
+        <mat-icon>keyboard_arrow_left</mat-icon>
+        <span>Go back</span>
       </div>
-    </form>
-  </mat-card>
+      <mat-card-header>
+        <mat-card-title *ngIf="order"
+          >Order #{{ order.orderId }}</mat-card-title
+        >
+      </mat-card-header>
+      <form [formGroup]="orderFormGroup">
+        <mat-card-content>
+          <mat-form-field>
+            <input formControlName="name" matInput placeholder="Order Name" />
+          </mat-form-field>
+          <mat-form-field>
+            <input formControlName="client" matInput placeholder="Client" />
+          </mat-form-field>
+          <mat-form-field class="price-form-control" floatLabel="never">
+            <input
+              type="number"
+              formControlName="price"
+              matInput
+              placeholder="0"
+            />
+            <span matPrefix>$&nbsp;</span>
+            <span matSuffix>.00</span>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+              <mat-option value="opened">Opened</mat-option>
+              <mat-option value="closed">Closed</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-selection-list
+            class="products-container"
+            formControlName="products"
+          >
+            <h3 matSubheader>Items</h3>
+            <mat-list-option
+              *ngFor="let product of productsList"
+              [selected]="product.isSelected"
+              [value]="product.id"
+            >
+              {{ product.name }}
+            </mat-list-option>
+          </mat-selection-list>
+        </mat-card-content>
+        <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="14px">
+          <button
+            mat-raised-button
+            color="primary"
+            class="full-width"
+            [disabled]="!orderFormGroup.valid"
+            (click)="onSubmit()"
+          >
+            Save
+          </button>
+          <button
+            mat-raised-button
+            color="accent"
+            class="full-width"
+            [disabled]="orderFormGroup.disabled"
+            (click)="openDeleteOrderDialog()"
+          >
+            Delete
+          </button>
+        </div>
+      </form>
+    </mat-card>
+  </div>
 </div>

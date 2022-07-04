@@ -12,8 +12,8 @@ import {
   DocumentData,
   deleteDoc,
 } from 'firebase/firestore';
-import { Order } from '../../shared/interfaces/order.model';
-import { OrderQuery } from '../../shared/interfaces/order.query';
+import { Order } from '../interfaces/order.model';
+import { OrderQuery } from '../interfaces/order.query';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
@@ -28,15 +28,20 @@ export class OrderService {
       );
 
       return orders;
-    } catch (error) {}
+    } catch (error) {
+      this._toastr.error('Failed to fetch orders.');
+    }
   }
 
-  async getOrder(orderId: string): Promise<Order> {
-    const ordersRef = doc(this._firestore, 'orders', orderId);
-    const orderDocSnap = await getDoc(ordersRef);
-    const order = orderDocSnap.data() as Order;
-
-    return order;
+  async getOrder(orderId: string): Promise<Order | void> {
+    try {
+      const ordersRef = doc(this._firestore, 'orders', orderId);
+      const orderDocSnap = await getDoc(ordersRef);
+      const order = orderDocSnap.data() as Order;
+      return order;
+    } catch (error) {
+      this._toastr.error('Update order failed.');
+    }
   }
 
   async updateOrder(orderId: string, order: Order): Promise<boolean | void> {
@@ -54,7 +59,7 @@ export class OrderService {
 
       return true;
     } catch (error) {
-      /* window.alert(error.message); */
+      this._toastr.error('Update order failed.');
     }
   }
 
@@ -65,6 +70,7 @@ export class OrderService {
       this._toastr.success('Order deleted.');
       return true;
     } catch (error) {
+      this._toastr.error('Order deletion failed.');
       return false;
     }
   }
@@ -75,12 +81,10 @@ export class OrderService {
 
     if (ordersDocSnap.exists()) {
       const data = ordersDocSnap.data();
-      const id = data['id'];
-      order.orderId = String(id);
+      order.orderId = String(data['id']);
 
       try {
-        await setDoc(doc(this._firestore, 'orders', String(id)), {
-          id,
+        await setDoc(doc(this._firestore, 'orders', order.orderId), {
           ...order,
         });
 

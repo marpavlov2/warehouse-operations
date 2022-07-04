@@ -18,7 +18,6 @@ const routes: Routes = [
     loadChildren: () =>
       import('./orders/orders.module').then((m) => m.OrdersModule),
   },
-  { path: '**', component: OrdersListComponent },
 ];
 
 @NgModule({

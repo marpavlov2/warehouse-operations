@@ -6,11 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderStatus } from 'src/app/shared/enums/order-status.enum';
-import { Order } from 'src/app/shared/interfaces/order.model';
-import { Product } from 'src/app/shared/interfaces/product.model';
+import { Order } from 'src/app/orders/interfaces/order.model';
+import { Product } from 'src/app/orders/interfaces/product.model';
 import { OrderService } from 'src/app/orders/services/order.service';
 import { Location } from '@angular/common';
+import { OrderStatus } from '../../enums/order-status.enum';
 
 @Component({
   selector: 'app-add-order',
@@ -58,7 +58,7 @@ export class AddOrderComponent implements OnInit {
     }
   }
 
-  goBack() {
+  goBack(): void {
     this._location.back();
   }
 }
