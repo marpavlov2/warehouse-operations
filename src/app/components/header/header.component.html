@@ -4,11 +4,7 @@
   fxLayout="row"
   fxLayoutAlign="space-between center"
 >
-  <a
-    href="https://www.positronx.io"
-    target="_blank"
-    class="warehouse-operations-logo"
-  >
+  <a routerLink="/" target="_blank" class="warehouse-operations-logo">
     Warehouse
   </a>
   <div class="nav-tool-items">
@@ -28,13 +24,17 @@
         >Register</a
       >
     </div>
-    <div
-      fxShow="true"
-      fxHide.lt-sm="true"
-      *ngIf="auth.isLoggedIn"
-      (click)="logout()"
-    >
-      <a mat-button mat-raised-button>Logout</a>
+    <div fxShow="true" fxHide.lt-sm="true" *ngIf="auth.isLoggedIn">
+      <mat-nav-list
+        class="nav-list-container"
+        fxLayout="row"
+        fxLayoutAlign="center center"
+      >
+        <mat-list-item routerLink="orders"> Orders </mat-list-item>
+        <mat-list-item mat-raised-button (click)="logout()">
+          <button mat-raised-button color="accent">Logout</button>
+        </mat-list-item>
+      </mat-nav-list>
     </div>
   </div>
 </mat-toolbar>

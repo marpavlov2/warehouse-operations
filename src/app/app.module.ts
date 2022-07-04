@@ -19,9 +19,16 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { AuthService } from './shared/services/auth.service';
 import { AuthGuardService } from './shared/services/auth.guard';
-import { OrdersComponent } from './pages/orders/orders.component';
 import { OrderService } from './shared/services/order.service';
-import { OrdersListResolver } from './pages/orders/orders.resolver';
+import { AddOrderComponent } from './pages/add-order/add-order.component';
+import { ProductService } from './shared/services/product.service';
+import { ProductsListResolver } from './pages/add-order/products.resolver';
+import { OrdersListComponent } from './pages/orders-list/orders-list.component';
+import { OrdersListResolver } from './pages/orders-list/orders-list.resolver';
+import { ViewEditOrderComponent } from './pages/view-edit-order/view-edit-order.component';
+import { OrderResolver } from './pages/view-edit-order/order.resolver';
+import { ToastrModule } from 'ngx-toastr';
+import { LoginGuardService } from './shared/services/login-guard.guard';
 
 @NgModule({
   declarations: [
@@ -29,7 +36,9 @@ import { OrdersListResolver } from './pages/orders/orders.resolver';
     LogInComponent,
     RegisterComponent,
     HeaderComponent,
-    OrdersComponent,
+    AddOrderComponent,
+    ViewEditOrderComponent,
+    OrdersListComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +48,7 @@ import { OrdersListResolver } from './pages/orders/orders.resolver';
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
@@ -47,8 +57,12 @@ import { OrdersListResolver } from './pages/orders/orders.resolver';
     SidenavService,
     AuthService,
     AuthGuardService,
+    LoginGuardService,
     OrderService,
     OrdersListResolver,
+    ProductsListResolver,
+    ProductService,
+    OrderResolver,
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
   ],
   bootstrap: [AppComponent],

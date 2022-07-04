@@ -1,7 +1,9 @@
-export interface IOrderQuery {
+export interface OrderQuery {
+  orderId: string;
   name: string;
   client: string;
   status: string;
-  date: Date;
+  date: string;
   price: number;
+  products: string[];
 }

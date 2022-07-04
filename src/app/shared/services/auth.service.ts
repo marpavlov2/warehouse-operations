@@ -11,6 +11,7 @@ import {
   getAuth,
   signOut,
 } from 'firebase/auth';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +27,11 @@ export class AuthService {
     return user ? JSON.parse(user) : null;
   }
 
-  constructor(private _firestore: Firestore, private router: Router) {
+  constructor(
+    private _firestore: Firestore,
+    private router: Router,
+    private _toastr: ToastrService
+  ) {
     this._auth.onAuthStateChanged((user) => {
       if (user) {
         localStorage.setItem('user', JSON.stringify(user));
@@ -40,9 +45,10 @@ export class AuthService {
   async signIn(email: string, password: string) {
     try {
       await signInWithEmailAndPassword(this._auth, email, password);
+      this._toastr.success('Successful login.');
       this.router.navigate(['/orders']);
     } catch (error) {
-      /* window.alert(error.message); */
+      this._toastr.error('Unsuccessful login.');
     }
   }
 
@@ -58,15 +64,17 @@ export class AuthService {
         email,
       });
 
+      this._toastr.success('Successful registration.', 'Automatic login');
       this.router.navigate(['/login']);
     } catch (error) {
-      /* window.alert(error.message); */
+      this._toastr.error('Unsuccessful registration.');
     }
   }
 
   async logout() {
     try {
       await signOut(this._auth);
+      this._toastr.success('Successful logout.');
     } catch (error) {
       /* window.alert(error.message); */
     }

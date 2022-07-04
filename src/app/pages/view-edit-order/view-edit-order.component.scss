@@ -1,0 +1,22 @@
+.add-order-container {
+  mat-card-header {
+    text-align: center;
+    width: 100%;
+    display: block;
+    font-weight: 700;
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+  .price-form-control {
+    text-align: right;
+  }
+
+  .products-container {
+    h3 {
+      padding: 0;
+    }
+  }
+}

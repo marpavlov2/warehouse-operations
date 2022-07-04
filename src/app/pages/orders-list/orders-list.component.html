@@ -17,19 +17,25 @@
       </mat-form-field>
 
       <div fxLayout="row" fxLayoutAlign="end center">
-        <button fxHide fxShow.gt-sm mat-raised-button class="mat-accent">
+        <a
+          fxHide
+          fxShow.gt-sm
+          mat-raised-button
+          color="primary"
+          routerLink="add"
+        >
           <span>Create</span>
-        </button>
+        </a>
 
-        <button
+        <a
           fxHide.gt-sm
           mat-raised-button
           [matMenuTriggerFor]="menu"
           aria-label="More"
-          (click)="$event.stopPropagation()"
+          routerLink="order"
         >
           <mat-icon class="mat-icon-more-vert">more_vert</mat-icon>
-        </button>
+        </a>
         <mat-menu #menu="matMenu" xPosition="before">
           <button mat-menu-item>
             <span>Create</span>
@@ -38,15 +44,18 @@
       </div>
     </div>
   </mat-toolbar-row>
-  <table mat-table [dataSource]="dataSource" class="full-width">
-    <!--- Note that these columns can be defined in any order.
-                             The actual rendered columns are set as a property on the row definition" -->
+  <table mat-table [dataSource]="dataSource" class="full-width" matSort>
+    <ng-container matColumnDef="orderId">
+      <th mat-header-cell *matHeaderCellDef>Order ID</th>
+      <td mat-cell *matCellDef="let order">
+        <span>{{ order.orderId }}</span>
+      </td>
+    </ng-container>
 
-    <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Name</th>
       <td mat-cell *matCellDef="let order">
-        <a class="text-truncate" [routerLink]="['/orders/' + order.id]">{{
+        <a class="text-truncate" [routerLink]="['/orders/' + order.orderId]">{{
           order.name
         }}</a>
       </td>
@@ -60,9 +69,16 @@
     </ng-container>
 
     <ng-container matColumnDef="status">
-      <th mat-header-cell *matHeaderCellDef>Status</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
       <td mat-cell *matCellDef="let order">
         <span>{{ order.status }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Date</th>
+      <td mat-cell *matCellDef="let order">
+        <span>{{ order.date | date: "medium" }}</span>
       </td>
     </ng-container>
 
@@ -81,8 +97,21 @@
           </button>
 
           <mat-menu #moreMenu="matMenu" xPosition="before">
-            <button mat-menu-item aria-label="remove">
+            <button
+              [disabled]="order.status === 'closed'"
+              mat-menu-item
+              aria-label="edit"
+              [routerLink]="['/orders/' + order.orderId]"
+            >
               <span>Edit</span>
+            </button>
+            <button
+              [disabled]="order.status === 'closed'"
+              mat-menu-item
+              aria-label="remove"
+              (click)="deleteOrder(order.orderId)"
+            >
+              <span>Delete</span>
             </button>
           </mat-menu>
         </div>
@@ -95,6 +124,6 @@
   <mat-paginator
     [length]="20"
     [pageSize]="5"
-    [pageSizeOptions]="[5]"
+    [pageSizeOptions]="[5, 10]"
   ></mat-paginator>
 </div>

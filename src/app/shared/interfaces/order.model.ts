@@ -1,16 +1,21 @@
-import { IOrderQuery } from './order.query';
+import { OrderQuery } from './order.query';
+import { Product } from './product.model';
 
 export class Order {
+  orderId: string;
   name: string;
   client: string;
   status: string;
-  date: Date;
+  date: string;
   price: number;
+  products: string[];
 
-  constructor(orderQuery: IOrderQuery) {
+  constructor(orderQuery: OrderQuery) {
+    this.orderId = orderQuery.orderId;
     this.client = orderQuery.client;
     this.status = orderQuery.status;
     this.date = orderQuery.date;
     this.price = orderQuery.price;
+    this.products = orderQuery.products;
   }
 }

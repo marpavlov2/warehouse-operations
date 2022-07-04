@@ -1,8 +1,8 @@
-// src/app/services/auth.service.ts
+// src/app/services/order.service.ts
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { collection, Firestore, getDocs, query } from '@angular/fire/firestore';
+import { collection, Firestore, getDocs } from '@angular/fire/firestore';
 import {
   doc,
   setDoc,
@@ -11,44 +11,92 @@ import {
   getDoc,
   QueryDocumentSnapshot,
   DocumentData,
+  deleteDoc,
 } from 'firebase/firestore';
 import { Order } from '../interfaces/order.model';
+import { BehaviorSubject } from 'rxjs';
+import { OrderQuery } from '../interfaces/order.query';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class OrderService {
-  constructor(private _firestore: Firestore, private router: Router) {}
+  private _ordersSubject$ = new BehaviorSubject<Order[]>([]);
+  public ordersSubject$ = this._ordersSubject$.asObservable();
 
-  async getOrders(): Promise<any> {
-    const ordersRef = await getDocs(collection(this._firestore, 'orders'));
-    const videos: Order[] = ordersRef.docs.map(
-      (doc: QueryDocumentSnapshot<DocumentData>) => doc.data() as Order
-    );
-    console.log(videos);
-    return videos;
+  constructor(private _firestore: Firestore, private _toastr: ToastrService) {}
 
-    /* const q = query(collection(this._firestore, 'orders'));
-    const querySnapshot = await getDocs(q);
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.data());
-    });
-    return true; */
+  async getOrders(): Promise<Order[] | void> {
+    try {
+      const ordersRef = await getDocs(collection(this._firestore, 'orders'));
+      const orders: Order[] = ordersRef.docs.map(
+        (doc: QueryDocumentSnapshot<DocumentData>) => doc.data() as OrderQuery
+      );
+
+      this._ordersSubject$.next(orders);
+      return orders;
+    } catch (error) {}
   }
 
-  async createOrder(order: Order) {
+  async getOrder(orderId: string): Promise<Order> {
+    const ordersRef = doc(this._firestore, 'orders', orderId);
+    const orderDocSnap = await getDoc(ordersRef);
+    const order = orderDocSnap.data() as Order;
+
+    return order;
+  }
+
+  async updateOrder(orderId: string, order: Order): Promise<boolean | void> {
+    try {
+      const ordersRef = doc(this._firestore, 'orders', String(orderId));
+      await updateDoc(ordersRef, {
+        name: order.name,
+        client: order.client,
+        price: order.price,
+        products: order.products,
+        status: order.status,
+      });
+
+      this._toastr.success('Order updated.');
+
+      return true;
+    } catch (error) {
+      /* window.alert(error.message); */
+    }
+  }
+
+  async deleteOrder(orderId: string) {
+    try {
+      await deleteDoc(doc(this._firestore, 'orders', orderId));
+
+      this._toastr.success('Order deleted.');
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async createOrder(order: Order): Promise<Order | void> {
     const ordersRef = doc(this._firestore, 'customIds', 'nextOrderId');
     const ordersDocSnap = await getDoc(ordersRef);
 
     if (ordersDocSnap.exists()) {
       const data = ordersDocSnap.data();
+      const id = data['id'];
+      order.orderId = String(id);
+
       try {
-        await setDoc(doc(this._firestore, 'orders', String(data['id'])), {
+        await setDoc(doc(this._firestore, 'orders', String(id)), {
+          id,
           ...order,
         });
 
         await updateDoc(ordersRef, {
           id: increment(1),
         });
+
+        this._toastr.success('Order created.');
+
+        return order;
       } catch (error) {
         /* window.alert(error.message); */
       }
