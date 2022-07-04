@@ -1,7 +1,6 @@
 // src/app/services/order.service.ts
 
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { collection, Firestore, getDocs } from '@angular/fire/firestore';
 import {
   doc,
@@ -13,16 +12,12 @@ import {
   DocumentData,
   deleteDoc,
 } from 'firebase/firestore';
-import { Order } from '../interfaces/order.model';
-import { BehaviorSubject } from 'rxjs';
-import { OrderQuery } from '../interfaces/order.query';
+import { Order } from '../../shared/interfaces/order.model';
+import { OrderQuery } from '../../shared/interfaces/order.query';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class OrderService {
-  private _ordersSubject$ = new BehaviorSubject<Order[]>([]);
-  public ordersSubject$ = this._ordersSubject$.asObservable();
-
   constructor(private _firestore: Firestore, private _toastr: ToastrService) {}
 
   async getOrders(): Promise<Order[] | void> {
@@ -32,7 +27,6 @@ export class OrderService {
         (doc: QueryDocumentSnapshot<DocumentData>) => doc.data() as OrderQuery
       );
 
-      this._ordersSubject$.next(orders);
       return orders;
     } catch (error) {}
   }

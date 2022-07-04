@@ -19,14 +19,6 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { AuthService } from './shared/services/auth.service';
 import { AuthGuardService } from './shared/services/auth.guard';
-import { OrderService } from './shared/services/order.service';
-import { AddOrderComponent } from './orders/pages/add-order/add-order.component';
-import { ProductService } from './shared/services/product.service';
-import { ProductsListResolver } from './orders/pages/add-order/products.resolver';
-import { OrdersListComponent } from './orders/pages/orders-list/orders-list.component';
-import { OrdersListResolver } from './orders/pages/orders-list/orders-list.resolver';
-import { ViewEditOrderComponent } from './orders/pages/view-edit-order/view-edit-order.component';
-import { OrderResolver } from './orders/pages/view-edit-order/order.resolver';
 import { ToastrModule } from 'ngx-toastr';
 import { LoginGuardService } from './shared/services/login-guard.guard';
 

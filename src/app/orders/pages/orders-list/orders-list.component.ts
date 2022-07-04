@@ -1,11 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { Order } from 'src/app/shared/interfaces/order.model';
-import { OrderService } from 'src/app/shared/services/order.service';
+import { OrderService } from 'src/app/orders/services/order.service';
+import { DeleteOrderDialogComponent } from '../../dialogs/delete-order-dialog/delete-order-dialog.component';
+import { OrderStatus } from 'src/app/shared/enums/order-status.enum';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'app-orders-list',
@@ -16,6 +20,10 @@ export class OrdersListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  orderStatuses = OrderStatus;
+
+  deleteOrderDialogRef: MatDialogRef<DeleteOrderDialogComponent> | null;
+
   searchInput = new FormControl('');
 
   dataSource = new MatTableDataSource<Order>();
@@ -23,18 +31,35 @@ export class OrdersListComponent implements OnInit {
 
   constructor(
     private _orderService: OrderService,
-    private _activatedRoute: ActivatedRoute
+    private _activatedRoute: ActivatedRoute,
+    private _matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this._activatedRoute.data.subscribe(({ ordersList }) => {
       this.dataSource.data = ordersList;
     });
+
+    this.searchInput.valueChanges
+      .pipe(debounceTime(500), distinctUntilChanged())
+      .subscribe(async (searchTerm) => {
+        this.applyFilter(searchTerm || '');
+      });
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  applyFilter(filterValue: string) {
+    if (filterValue !== 'none') {
+      filterValue = filterValue.trim(); // Remove whitespace
+      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+      this.dataSource.filter = filterValue;
+      return;
+    }
+    this.dataSource.filter = '';
   }
 
   async deleteOrder(orderId: string) {
@@ -44,5 +69,24 @@ export class OrdersListComponent implements OnInit {
         return order.orderId !== orderId;
       });
     }
+  }
+
+  openDeleteOrderDialog(orderId: string) {
+    this.deleteOrderDialogRef = this._matDialog.open(
+      DeleteOrderDialogComponent,
+      {
+        disableClose: false,
+        width: '480px',
+        data: orderId,
+      }
+    );
+
+    this.deleteOrderDialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteOrder(orderId);
+      }
+
+      this.deleteOrderDialogRef = null;
+    });
   }
 }

@@ -6,11 +6,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OrderStatus } from 'src/app/shared/enums/order-status.enum';
 import { Order } from 'src/app/shared/interfaces/order.model';
 import { Product } from 'src/app/shared/interfaces/product.model';
-import { OrderService } from 'src/app/shared/services/order.service';
+import { OrderService } from 'src/app/orders/services/order.service';
 import { Location } from '@angular/common';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { DeleteOrderDialogComponent } from '../../dialogs/delete-order-dialog/delete-order-dialog.component';
 
 @Component({
   selector: 'app-view-edit-order',
@@ -20,6 +21,8 @@ import { Location } from '@angular/common';
 export class ViewEditOrderComponent implements OnInit {
   productsList: Product[];
   order: Order;
+
+  deleteOrderDialogRef: MatDialogRef<DeleteOrderDialogComponent> | null;
 
   private _orderFormGroup: FormGroup;
 
@@ -32,7 +35,8 @@ export class ViewEditOrderComponent implements OnInit {
     private _orderService: OrderService,
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
-    private _location: Location
+    private _location: Location,
+    private _matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -78,6 +82,25 @@ export class ViewEditOrderComponent implements OnInit {
     if (orderRemoved) {
       this._router.navigate(['/orders']);
     }
+  }
+
+  openDeleteOrderDialog() {
+    this.deleteOrderDialogRef = this._matDialog.open(
+      DeleteOrderDialogComponent,
+      {
+        disableClose: false,
+        width: '480px',
+        data: this.order.orderId,
+      }
+    );
+
+    this.deleteOrderDialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteOrder(this.order.orderId);
+      }
+
+      this.deleteOrderDialogRef = null;
+    });
   }
 
   goBack() {

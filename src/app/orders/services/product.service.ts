@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { collection, Firestore, getDocs } from '@angular/fire/firestore';
 import { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
 import { BehaviorSubject } from 'rxjs';
-import { ProductQuery } from '../interfaces/product.query';
-import { Product } from '../interfaces/product.model';
+import { Product } from 'src/app/shared/interfaces/product.model';
+import { ProductQuery } from 'src/app/shared/interfaces/product.query';
 
 @Injectable()
 export class ProductService {

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { QueryDocumentSnapshot } from '@angular/fire/firestore';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Order } from 'src/app/shared/interfaces/order.model';
-import { OrderService } from 'src/app/shared/services/order.service';
+import { OrderService } from 'src/app/orders/services/order.service';
 
 @Injectable()
 export class OrdersListResolver implements Resolve<Order[]> {

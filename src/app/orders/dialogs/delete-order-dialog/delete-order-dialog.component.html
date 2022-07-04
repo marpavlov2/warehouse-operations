@@ -1,0 +1,13 @@
+<mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+  <h2 mat-dialog-title>Delete order id: #{{ orderId }}?</h2>
+  <mat-icon class="close-dialog" (click)="dialogRef.close(false)"
+    >close</mat-icon
+  > </mat-toolbar-row
+><mat-dialog-content>
+  <p>Are you sure you want to delete the order?</p>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-raised-button color="primary" (click)="deleteOrder()">
+    Delete
+  </button>
+</mat-dialog-actions>
