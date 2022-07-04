@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -19,7 +19,7 @@ import { DeleteOrderDialogComponent } from '../../dialogs/delete-order-dialog/de
   styleUrls: ['./view-edit-order.component.scss'],
 })
 export class ViewEditOrderComponent implements OnInit {
-  productsList: Product[];
+  productsList: Product[] = [];
   order: Order;
 
   deleteOrderDialogRef: MatDialogRef<DeleteOrderDialogComponent> | null;
@@ -36,7 +36,8 @@ export class ViewEditOrderComponent implements OnInit {
     private _activatedRoute: ActivatedRoute,
     private _router: Router,
     private _location: Location,
-    private _matDialog: MatDialog
+    private _matDialog: MatDialog,
+    private _cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -53,7 +54,7 @@ export class ViewEditOrderComponent implements OnInit {
 
       this.productsList = productsList.map((product: Product) => {
         product.isSelected = this.order.products.some(
-          (orderProduct) => orderProduct === product.id
+          (orderProduct) => orderProduct.id === product.id
         );
         return product;
       });
@@ -63,6 +64,8 @@ export class ViewEditOrderComponent implements OnInit {
       if (this.order.status === 'closed') {
         this.orderFormGroup.disable();
       }
+
+      this._cdr.detectChanges();
     });
   }
 

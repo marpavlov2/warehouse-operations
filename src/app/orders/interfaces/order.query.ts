@@ -1,3 +1,5 @@
+import { Product } from './product.model';
+
 export interface OrderQuery {
   orderId: string;
   name: string;
@@ -5,5 +7,5 @@ export interface OrderQuery {
   status: string;
   date: string;
   price: number;
-  products: string[];
+  products: Product[];
 }

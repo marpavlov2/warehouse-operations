@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { AuthService } from './shared/services/auth.service';
+import { AuthService } from './auth/services/auth.service';
 import { SidenavService } from './shared/services/sidenav.service';
 
 @Component({

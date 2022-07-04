@@ -8,7 +8,7 @@ export class Order {
   status: string;
   date: string;
   price: number;
-  products: string[];
+  products: Product[];
 
   constructor(orderQuery: OrderQuery) {
     this.orderId = orderQuery.orderId;

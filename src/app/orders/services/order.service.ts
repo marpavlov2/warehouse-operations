@@ -1,4 +1,5 @@
 // src/app/services/order.service.ts
+// ServerErrorInterceptor && Error service can be added to handle Errors
 
 import { Injectable } from '@angular/core';
 import { collection, Firestore, getDocs } from '@angular/fire/firestore';

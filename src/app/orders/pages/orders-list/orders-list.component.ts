@@ -24,7 +24,15 @@ export class OrdersListComponent implements OnInit {
   searchInput = new FormControl('');
 
   dataSource = new MatTableDataSource<Order>();
-  displayedColumns = ['orderId', 'name', 'client', 'status', 'date', 'buttons'];
+  displayedColumns = [
+    'orderId',
+    'name',
+    'client',
+    'status',
+    'date',
+    'products',
+    'buttons',
+  ];
 
   constructor(
     private _orderService: OrderService,

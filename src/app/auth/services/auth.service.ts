@@ -1,4 +1,5 @@
 // src/app/services/auth.service.ts
+// ServerErrorInterceptor && Error service can be added to handle Errors
 
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';

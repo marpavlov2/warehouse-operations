@@ -6,7 +6,7 @@ import { OrdersListComponent } from './pages/orders-list/orders-list.component';
 import { OrdersListResolver } from './pages/orders-list/orders-list.resolver';
 import { OrderResolver } from './pages/view-edit-order/order.resolver';
 import { ViewEditOrderComponent } from './pages/view-edit-order/view-edit-order.component';
-import { AuthGuardService } from '../shared/services/auth.guard';
+import { AuthGuardService } from '../auth/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -38,5 +38,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
+  providers: [AuthGuardService],
 })
 export class OrdersRoutingModule {}

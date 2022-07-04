@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomFormValidator } from 'src/app/shared/form-validator';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-log-in',
-  templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss'],
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss'],
 })
-export class LogInComponent implements OnInit {
-  private _loginFormGroup: FormGroup;
+export class RegisterComponent implements OnInit {
+  private _registerFormGroup: FormGroup;
 
-  get loginFormGroup(): FormGroup {
-    return this._loginFormGroup;
+  get registerFormGroup(): FormGroup {
+    return this._registerFormGroup;
   }
 
   get email() {
-    return this.loginFormGroup.get('email');
+    return this.registerFormGroup.get('email');
   }
 
   get password() {
-    return this.loginFormGroup.get('password');
+    return this.registerFormGroup.get('password');
   }
 
   constructor(
@@ -29,7 +29,7 @@ export class LogInComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this._loginFormGroup = this._formBuilder.group({
+    this._registerFormGroup = this._formBuilder.group({
       email: [null, [Validators.required, Validators.email]],
       password: [
         null,
@@ -51,8 +51,8 @@ export class LogInComponent implements OnInit {
     });
   }
 
-  async login() {
-    const registerForm = this.loginFormGroup.value;
-    await this._authService.signIn(registerForm.email, registerForm.password);
+  async register() {
+    const registerForm = this.registerFormGroup.value;
+    await this._authService.signUp(registerForm.email, registerForm.password);
   }
 }
