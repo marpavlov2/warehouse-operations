@@ -48,7 +48,8 @@ export class AuthService {
       this._toastr.success('Successful login.');
       this.router.navigate(['/orders']);
     } catch (error) {
-      this._toastr.error('Unsuccessful login.');
+      // Error message description can be added based on API error code
+      this._toastr.error('Unsuccessful login.', 'Error message');
     }
   }
 
@@ -76,7 +77,7 @@ export class AuthService {
       await signOut(this._auth);
       this._toastr.success('Successful logout.');
     } catch (error) {
-      /* window.alert(error.message); */
+      this._toastr.error('Unsuccessful logout.');
     }
   }
 }
