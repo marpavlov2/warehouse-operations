@@ -6,11 +6,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Order } from 'src/app/orders/interfaces/order.model';
-import { Product } from 'src/app/orders/interfaces/product.model';
 import { OrderService } from 'src/app/orders/services/order.service';
 import { Location } from '@angular/common';
 import { OrderStatus } from '../../enums/order-status.enum';
+import { Order } from '../../interfaces/order.query';
+import { Product } from '../../interfaces/product.query';
 
 @Component({
   selector: 'app-add-order',

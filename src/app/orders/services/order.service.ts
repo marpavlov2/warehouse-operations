@@ -13,9 +13,8 @@ import {
   DocumentData,
   deleteDoc,
 } from 'firebase/firestore';
-import { Order } from '../interfaces/order.model';
-import { OrderQuery } from '../interfaces/order.query';
 import { ToastrService } from 'ngx-toastr';
+import { Order } from '../interfaces/order.query';
 
 @Injectable()
 export class OrderService {
@@ -25,7 +24,7 @@ export class OrderService {
     try {
       const ordersRef = await getDocs(collection(this._firestore, 'orders'));
       const orders: Order[] = ordersRef.docs.map(
-        (doc: QueryDocumentSnapshot<DocumentData>) => doc.data() as OrderQuery
+        (doc: QueryDocumentSnapshot<DocumentData>) => doc.data() as Order
       );
 
       return orders;
@@ -97,10 +96,10 @@ export class OrderService {
 
         return order;
       } catch (error) {
-        /* window.alert(error.message); */
+        this._toastr.error('Create order failed.');
       }
     } else {
-      console.log('No such document! customIds collection does not exist!');
+      window.alert('No such document! customIds collection does not exist!');
     }
   }
 }

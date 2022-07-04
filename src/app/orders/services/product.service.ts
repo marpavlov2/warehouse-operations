@@ -5,8 +5,7 @@ import { Injectable } from '@angular/core';
 import { collection, Firestore, getDocs } from '@angular/fire/firestore';
 import { QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
 import { ToastrService } from 'ngx-toastr';
-import { Product } from 'src/app/orders/interfaces/product.model';
-import { ProductQuery } from 'src/app/orders/interfaces/product.query';
+import { Product } from '../interfaces/product.query';
 
 @Injectable()
 export class ProductService {
@@ -18,7 +17,7 @@ export class ProductService {
         collection(this._firestore, 'products')
       );
       const products: Product[] = productsRef.docs.map(
-        (doc: QueryDocumentSnapshot<DocumentData>) => doc.data() as ProductQuery
+        (doc: QueryDocumentSnapshot<DocumentData>) => doc.data() as Product
       );
 
       return products;

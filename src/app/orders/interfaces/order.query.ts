@@ -1,6 +1,6 @@
-import { Product } from './product.model';
+import { Product } from './product.query';
 
-export interface OrderQuery {
+export interface Order {
   orderId: string;
   name: string;
   client: string;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { Order } from 'src/app/orders/interfaces/order.model';
 import { OrderService } from 'src/app/orders/services/order.service';
+import { Order } from '../../interfaces/order.query';
 
 @Injectable()
 export class OrderResolver implements Resolve<Order | null> {

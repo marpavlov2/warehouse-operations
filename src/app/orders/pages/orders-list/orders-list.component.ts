@@ -5,10 +5,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { Order } from 'src/app/orders/interfaces/order.model';
 import { OrderService } from 'src/app/orders/services/order.service';
 import { DeleteOrderDialogComponent } from '../../dialogs/delete-order-dialog/delete-order-dialog.component';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { Order } from '../../interfaces/order.query';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-orders-list',
@@ -18,6 +19,8 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class OrdersListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
+  subscription: Subscription;
 
   deleteOrderDialogRef: MatDialogRef<DeleteOrderDialogComponent> | null;
 
@@ -45,7 +48,7 @@ export class OrdersListComponent implements OnInit {
       this.dataSource.data = ordersList;
     });
 
-    this.searchInput.valueChanges
+    this.subscription = this.searchInput.valueChanges
       .pipe(debounceTime(500), distinctUntilChanged())
       .subscribe(async (searchTerm) => {
         this.applyFilter(searchTerm || '');
@@ -93,5 +96,8 @@ export class OrdersListComponent implements OnInit {
 
       this.deleteOrderDialogRef = null;
     });
+  }
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
