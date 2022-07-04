@@ -94,8 +94,8 @@
       <th mat-header-cell *matHeaderCellDef>Products</th>
       <td mat-cell *matCellDef="let order">
         <span *ngFor="let product of order.products; let i = index">
-          {{ product.name }}
-          {{ i === order.products.length - 1 ? "" : ",&nbsp;" }}</span
+          {{ product.name
+          }}{{ i === order.products.length - 1 ? "" : ",&nbsp;" }}</span
         >
       </td>
     </ng-container>
@@ -119,7 +119,7 @@
               [disabled]="order.status === 'closed'"
               mat-menu-item
               aria-label="edit"
-              [routerLink]="['/orders/' + order.orderId]"
+              [routerLink]="['/orders/' + order.orderId + '/edit']"
             >
               <span>Edit</span>
             </button>

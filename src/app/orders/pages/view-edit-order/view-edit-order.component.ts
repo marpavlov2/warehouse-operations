@@ -26,6 +26,8 @@ export class ViewEditOrderComponent implements OnInit {
 
   private _orderFormGroup: FormGroup;
 
+  isEditMode: boolean;
+
   get orderFormGroup(): FormGroup {
     return this._orderFormGroup;
   }
@@ -41,6 +43,8 @@ export class ViewEditOrderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.isEditMode = this._router.url.includes('/edit');
+
     this._orderFormGroup = this._formBuilder.group({
       name: ['', Validators.required],
       client: ['', Validators.required],
@@ -61,7 +65,7 @@ export class ViewEditOrderComponent implements OnInit {
 
       this.orderFormGroup.patchValue(this.order);
 
-      if (this.order.status === 'closed') {
+      if (this.order.status === 'closed' || !this.isEditMode) {
         this.orderFormGroup.disable();
       }
 

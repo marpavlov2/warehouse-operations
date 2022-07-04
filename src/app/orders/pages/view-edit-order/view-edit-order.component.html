@@ -15,8 +15,10 @@
         <span>Go back</span>
       </div>
       <mat-card-header>
-        <mat-card-title *ngIf="order"
-          >Order #{{ order.orderId }}</mat-card-title
+        <mat-card-title *ngIf="order">
+          {{ isEditMode ? "Edit" : "View" }} order #{{
+            order.orderId
+          }}</mat-card-title
         >
       </mat-card-header>
       <form [formGroup]="orderFormGroup">
@@ -58,7 +60,12 @@
             </mat-list-option>
           </mat-selection-list>
         </mat-card-content>
-        <div fxLayout="column" fxLayoutAlign="space-between" fxLayoutGap="14px">
+        <div
+          fxLayout="column"
+          fxLayoutAlign="space-between"
+          fxLayoutGap="14px"
+          *ngIf="isEditMode"
+        >
           <button
             mat-raised-button
             color="primary"

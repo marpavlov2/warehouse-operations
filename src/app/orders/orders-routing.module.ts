@@ -32,6 +32,15 @@ const routes: Routes = [
       orderData: OrderResolver,
     },
   },
+  {
+    path: ':id/edit',
+    component: ViewEditOrderComponent,
+    canActivate: [AuthGuardService],
+    resolve: {
+      productsList: ProductsListResolver,
+      orderData: OrderResolver,
+    },
+  },
   { path: '**', redirectTo: '' },
 ];
 
