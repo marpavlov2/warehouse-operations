@@ -54,7 +54,7 @@ export class AuthService {
     }
   }
 
-  async signUp(email: string, password: string) {
+  async signUp(name: string, city: string, email: string, password: string) {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         this._auth,
@@ -63,6 +63,8 @@ export class AuthService {
       );
 
       await setDoc(doc(this._firestore, 'users', userCredential.user.uid), {
+        name,
+        city,
         email,
       });
 
