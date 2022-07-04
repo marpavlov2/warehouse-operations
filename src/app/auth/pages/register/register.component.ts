@@ -28,6 +28,7 @@ export class RegisterComponent implements OnInit {
     private _authService: AuthService
   ) {}
 
+  // Name and city are optional, this form could also contain repeat password field
   ngOnInit(): void {
     this._registerFormGroup = this._formBuilder.group({
       name: [''],
